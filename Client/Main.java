@@ -17,19 +17,14 @@ public class Main {
             String height = "" + dim.getHeight();
             Rectangle rect=new Rectangle(dim);
             Robot bot=new Robot(gDev);
-            
-            for (int i = 0; i < 10; i++) {
-                ObjectOutputStream out=new ObjectOutputStream(kil.getOutputStream());
-            
+            while (true) {
                 SendScreen send= new SendScreen(bot,kil,rect);
                 send.send();
-                out.writeObject("bob is good");
-                
-               System.out.println("jsnxjkksnx");
-              
+                Thread.sleep(100);
             }
-           
-        } catch (Exception e) {
+            
+            
+            } catch (Exception e) {
             e.printStackTrace();
         }
         

@@ -1,6 +1,8 @@
 package Client;
 import java.awt.*;
 import java.awt.image.*;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
@@ -39,10 +41,15 @@ public class SendScreen {
             } catch (Exception e) {
                 // TODO: handle exception
             }
-       
+           
             BufferedImage image=capture.createScreenCapture(screen);
+            ByteArrayOutputStream byteOut=new ByteArrayOutputStream();
             try {
-                ImageIO.write(image,"jpeg", out);
+                ImageIO.write(image,"jpeg", byteOut);
+               out.write(byteOut.toByteArray());
+               out.flush();
+               
+
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
