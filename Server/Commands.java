@@ -1,5 +1,8 @@
 package Server;
-public class Commands {
+
+import java.io.Serializable;
+
+public class Commands implements Serializable{
     public static int MOUSE_MOVED=0;
     public static int MOUSE_CLICKED=1;
     public static int MOUSE_RELEASED=2;
@@ -7,6 +10,7 @@ public class Commands {
     public static int KEY_RELEASED=4;
 
     int command;
+    Location loc;
     public Commands(int command){
         this.command=command;
     }
@@ -45,5 +49,11 @@ public class Commands {
     }
     public void setCommand(int command) {
         this.command = command;
+    }
+    public Location getLoc() {
+        return loc;
+    }
+    public void setLoc(Location loc) {
+        this.loc = loc;
     }
 }

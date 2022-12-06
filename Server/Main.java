@@ -12,36 +12,29 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import Server.ReceiveScreen;
 import java.awt.*;
+import java.awt.image.*;
 
 public class Main {
     public static void main(String[] args) throws Exception{
         try {
             Server serv=new Server(6667);
             Socket Client=serv.accept();
-            JFrame frame=new JFrame();
+            Frame frame=new Frame();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setVisible(true);
+            JPanel pan=new JPanel();
+            //pan.setBackground(Color.CYAN);
+            frame.add(pan);
+            ReceiveScreen receive=new ReceiveScreen(Client,pan);
+            frame.addKeyListener(new SendCommand(Client));
+            frame.addMouseListener(new SendCommand(Client));
+            frame.addMouseMotionListener(new SendCommand(Client));
             while (true) {
-                InputStream in=Client.getInputStream();
-                byte[] bytes = new byte[1024 * 1024];
-                int count = 0;
-                do {
-                    System.out.println(bytes.length);
-                  count += in.read(bytes, count, bytes.length - count);
-                  System.out.println("count="+count);
-                } while (
-                  !(
-                    count > 4 &&
-                    bytes[count - 2] == (byte) -1 &&
-                    bytes[count - 1] == (byte) -39
-                  )
-                );
-                Image image1 = ImageIO.read(new ByteArrayInputStream(bytes));
-                frame.getContentPane().removeAll();
-                frame.getContentPane().add(new JLabel(new ImageIcon(image1)));
+              receive.run();
             }
+           
            
         } catch (Exception e) {
             e.printStackTrace();

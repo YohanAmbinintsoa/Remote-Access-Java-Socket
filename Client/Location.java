@@ -1,4 +1,4 @@
-package Server;
+package Client;
 import java.io.Serializable;
 /**
  * Location
@@ -9,12 +9,6 @@ public class Location implements Serializable{
     Integer Y;
     Integer KeyCode;
     public Location() {
-    }
-    public Integer getCommand() {
-        return command;
-    }
-    public void setCommand(Integer command) {
-        this.command = command;
     }
     public Integer getX() {
         return X;
@@ -34,5 +28,10 @@ public class Location implements Serializable{
     public void setKeyCode(Integer keyCode) {
         KeyCode = keyCode;
     }
-   
+    public Integer getCommand() {
+        return command;
+    }
+    public void setCommand(Integer command) {
+        this.command = command;
+    }  
 }
