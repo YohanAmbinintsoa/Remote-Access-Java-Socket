@@ -27,22 +27,24 @@ public class ReceiveCommands extends Thread{
     public void run() {
         super.run();
         while (true) {
+            if (!this.soc.isConnected()) {
+                break;
+            }
             try {
-                //Location loc=(Location)this.in.readObject();
-                Scanner scan=new Scanner(this.in);
-                int command=scan.nextInt();
-                //System.out.println("le commande dia "+loc.getCommand());
+                
+                DataInputStream data=new DataInputStream(in);
+                int command=data.readInt();
                 if(command==0){
-                    System.out.println("nitsika le souris");
-                    robot.mouseMove(scan.nextInt(),scan.nextInt());
+                    System.out.println("nietsika le souris");
+                    robot.mouseMove(data.readInt(),data.readInt());
                 } else if (command==1) {
-                    robot.mousePress(scan.nextInt());
+                    robot.mousePress(data.readInt());
                 } else if (command==2) {
-                    robot.mouseRelease(scan.nextInt());
+                    robot.mouseRelease(data.readInt());
                 } else if (command==3) {
-                    robot.keyPress(scan.nextInt());
+                    robot.keyPress(data.readInt());
                 } else if (command==4) {
-                    robot.keyRelease(scan.nextInt());
+                    robot.keyRelease(data.readInt());
                 }
             } catch (Exception e) {
                 e.printStackTrace();

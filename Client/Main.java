@@ -20,7 +20,7 @@ public class Main {
             SendScreen send= new SendScreen(bot,kil,rect);
             ReceiveCommands commands=new ReceiveCommands(kil);
             } catch (Exception e) {
-            e.printStackTrace();
+           System.out.println(e.getMessage());
         }
         
     }

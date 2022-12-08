@@ -42,6 +42,9 @@ public class SendScreen extends Thread{
     public void run(){
            try {
             while (true) {
+                if (!this.soc.isConnected()) {
+                    this.setStop(true);
+                }
                 this.out=new DataOutputStream(soc.getOutputStream());
                 RenderedImage image=capture.createScreenCapture(screen);
                 ByteArrayOutputStream byteOut=new ByteArrayOutputStream();

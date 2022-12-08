@@ -8,11 +8,11 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 public class SendCommand implements MouseListener,KeyListener,MouseMotionListener{
     Socket soc;
-    PrintWriter obj;
+    DataOutputStream obj;
     public SendCommand(Socket soc) {
         this.soc=soc;
         try {
-            this.obj=new PrintWriter(soc.getOutputStream());
+            this.obj=new DataOutputStream(soc.getOutputStream());
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -21,18 +21,18 @@ public class SendCommand implements MouseListener,KeyListener,MouseMotionListene
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        this.obj.println(Commands.getMOUSE_CLICKED());
         
-        try {
-        int boutton=1024;
-        if (e.getButton()==MouseEvent.BUTTON3) {
-            boutton=4096;
-        }   
-        this.obj.println(boutton);
-        this.obj.flush(); 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        // try {
+        // int boutton=1024;
+        // if (e.getButton()==MouseEvent.BUTTON3) {
+        //     boutton=4096;
+        // }   
+        // this.obj.writeInt(Commands.getMOUSE_CLICKED());
+        // this.obj.writeInt(boutton);
+        // this.obj.flush(); 
+        // } catch (Exception ex) {
+        //     ex.printStackTrace();
+        // }
         
     }
 
@@ -51,14 +51,15 @@ public class SendCommand implements MouseListener,KeyListener,MouseMotionListene
     @Override
     public void mousePressed(MouseEvent e) {
         // TODO Auto-generated method stub
-        this.obj.println(Commands.getMOUSE_CLICKED());
+        
         
         try {
         int boutton=1024;
         if (e.getButton()==MouseEvent.BUTTON3) {
             boutton=4096;
         }   
-        this.obj.println(boutton);
+        this.obj.writeInt(Commands.getMOUSE_CLICKED());
+        this.obj.writeInt(boutton);
         this.obj.flush(); 
         } catch (Exception ex) {
         // TODO: handle exception
@@ -70,14 +71,15 @@ public class SendCommand implements MouseListener,KeyListener,MouseMotionListene
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        this.obj.println(Commands.getMOUSE_RELEASED());
+        
         
         try {
         int boutton=1024;
         if (e.getButton()==MouseEvent.BUTTON3) {
             boutton=4096;
         }   
-        this.obj.println(boutton);
+        this.obj.writeInt(Commands.getMOUSE_RELEASED());
+        this.obj.writeInt(boutton);
         this.obj.flush(); 
         } catch (Exception ex) {
         // TODO: handle exception
@@ -90,8 +92,8 @@ public class SendCommand implements MouseListener,KeyListener,MouseMotionListene
     public void keyPressed(KeyEvent e) {
         System.out.println("KeyPressed?");
         try {
-         this.obj.println(Commands.getKEY_PRESSED());
-         this.obj.println(e.getKeyCode());
+         this.obj.writeInt(Commands.getKEY_PRESSED());
+         this.obj.writeInt(e.getKeyCode());
         //  this.obj.println(e.getY());
          this.obj.flush();
         } catch (Exception ex) {
@@ -106,8 +108,8 @@ public class SendCommand implements MouseListener,KeyListener,MouseMotionListene
         // TODO Auto-generated method stub
         System.out.println("KeyReleased?");
         try {
-         this.obj.println(Commands.getKEY_RELEASED());
-         this.obj.println(e.getKeyCode());
+         this.obj.writeInt(Commands.getKEY_RELEASED());
+         this.obj.writeInt(e.getKeyCode());
         //  this.obj.println(e.getY());
          this.obj.flush();
         } catch (Exception ex) {
@@ -134,9 +136,9 @@ public class SendCommand implements MouseListener,KeyListener,MouseMotionListene
    
        System.out.println("Lasa v?");
        try {
-        this.obj.println(Commands.getMOUSE_MOVED());
-        this.obj.println(e.getX());
-        this.obj.println(e.getY());
+        this.obj.writeInt(Commands.getMOUSE_MOVED());
+        this.obj.writeInt(e.getX());
+        this.obj.writeInt(e.getY());
         this.obj.flush();
        } catch (Exception ex) {
         // TODO: handle exception
